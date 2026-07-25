@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carboxylic Hacker - IUPAC System Breach</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Orbitron & Prompt -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #0B1020;
+            --surface-color: #151A2D;
+            --primary-color: #00E5FF;
+            --secondary-color: #7C3AED;
+            --accent-color: #FF2D95;
+            --success-color: #00FF88;
+            --warning-color: #FFC107;
+            --error-color: #FF3B3B;
+            --text-primary: #FFFFFF;
+            --text-secondary: #A7B0C0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Prompt', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 15px;
+        }
+
+        .cyber-font {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1.5px;
+        }
+
+        .cyber-card {
+            background-color: var(--surface-color);
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.25);
+            border-radius: 16px;
+            padding: 2rem 1.5rem;
+            width: 100%;
+            max-width: 760px;
+            position: relative;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-cyber-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: #000;
+            font-weight: 800;
+            border: none;
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+            transition: all 0.2s ease-in-out;
+            letter-spacing: 1px;
+        }
+
+        .btn-cyber-primary:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.8);
+            color: #000;
+        }
+
+        .btn-cyber-danger {
+            background: linear-gradient(135deg, var(--accent-color), var(--error-color)) !important;
+            color: #FFF !important;
+            font-weight: 800;
+            border: none;
+            box-shadow: 0 0 15px rgba(255, 45, 149, 0.5) !important;
+            transition: all 0.2s ease-in-out;
+            letter-spacing: 1px;
+        }
+
+        .btn-cyber-danger:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 0 25px rgba(255, 59, 59, 0.8) !important;
+        }
+
+        .btn-cyber-outline {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            background: rgba(0, 229, 255, 0.05);
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+            white-space: normal;
+            word-wrap: break-word;
+        }
+
+        .btn-cyber-outline:hover {
+            background: var(--primary-color);
+            color: #000;
+            box-shadow: 0 0 15px var(--primary-color);
+        }
+
+        .btn-option {
+            text-align: left;
+            min-height: 55px;
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+        }
+
+        .btn-option.correct-choice {
+            background-color: rgba(0, 255, 136, 0.2) !important;
+            border-color: var(--success-color) !important;
+            color: var(--success-color) !important;
+        }
+
+        .btn-option.wrong-choice {
+            background-color: rgba(255, 59, 59, 0.2) !important;
+            border-color: var(--error-color) !important;
+            color: var(--error-color) !important;
+        }
+
+        .text-neon-cyan { color: var(--primary-color); text-shadow: 0 0 10px rgba(0,229,255,0.5); }
+        .text-neon-pink { color: var(--accent-color); text-shadow: 0 0 10px rgba(255,45,149,0.5); }
+        .text-cyber-green { color: var(--success-color); text-shadow: 0 0 10px rgba(0,255,136,0.5); }
+        .text-warning-yellow { color: var(--warning-color); text-shadow: 0 0 10px rgba(255,193,7,0.5); }
+        
+        .chemical-structure {
+            font-family: 'Orbitron', monospace;
+            font-size: 1.5rem;
+            background: rgba(0,0,0,0.6);
+            padding: 20px 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(0, 229, 255, 0.3);
+            border-left: 5px solid var(--accent-color);
+            letter-spacing: 2px;
+            word-break: break-all;
+        }
+
+        .highlight-cooh {
+            color: var(--accent-color);
+            font-weight: bold;
+            text-shadow: 0 0 8px var(--accent-color);
+            background: rgba(255, 45, 149, 0.15);
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px dashed var(--accent-color);
+        }
+
+        .hud-badge {
+            background: rgba(21, 26, 45, 0.9);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 8px;
+            padding: 8px 5px;
+        }
+
+        .feedback-banner {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 85%;
+            padding: 15px 20px;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: 900;
+            z-index: 100;
+            box-shadow: 0 0 40px rgba(0,0,0,0.9);
+            animation: pulse 0.3s ease-in-out;
+        }
+
+        .feedback-success {
+            background: var(--surface-color);
+            border: 3px solid var(--success-color);
+            color: var(--success-color);
+            box-shadow: 0 0 30px var(--success-color);
+        }
+
+        .feedback-error {
+            background: var(--surface-color);
+            border: 3px solid var(--error-color);
+            color: var(--error-color);
+            box-shadow: 0 0 30px var(--error-color);
+        }
+
+        .explanation-box {
+            background: rgba(10, 14, 28, 0.95);
+            border: 1px solid var(--warning-color);
+            border-left: 5px solid var(--warning-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            text-align: left;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .hidden { display: none !important; }
+
+        @keyframes pulse {
+            0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cyber-card">
+        
+        <!-- ================= PAGE 1: HOME ================= -->
+        <div id="page-home" class="text-center">
+            <div class="mb-4">
+                <span class="badge bg-outline-info border text-neon-cyan px-3 py-2 rounded-pill cyber-font mb-2">PUBCHEM VERIFIED BREACH V3.0</span>
+                <h1 class="cyber-font text-neon-cyan display-4 fw-black mb-0">CARBOXYLIC</h1>
+                <h2 class="cyber-font text-neon-pink h2 fw-bold">&lt; HACKER /&gt;</h2>
+            </div>
+            
+            <p class="text-secondary mb-4 px-3">
+                สวมบทบาทเป็นไซเบอร์แฮกเกอร์ ถอดรหัสชื่อสารประกอบอินทรีย์ Carboxylic Acid ตามหลัก IUPAC เพื่อเจาะผ่านระบบความปลอดภัยฐานข้อมูลเคมี 20 ด่าน!
+            </p>
+
+            <button class="btn btn-cyber-primary btn-lg w-100 py-3 cyber-font fs-5" onclick="goToPage('page-howto')">
+                START GAME
+            </button>
+        </div>
+
+        <!-- ================= PAGE 2: HOW TO PLAY & IUPAC LESSON ================= -->
+        <div id="page-howto" class="hidden">
+            <h3 class="cyber-font text-neon-cyan h4 mb-3 border-bottom border-info pb-2">[ HOW TO PLAY & IUPAC LESSON ]</h3>
+            
+            <div class="text-secondary small mb-3">
+                Learn the basics of IUPAC nomenclature by identifying the parent carbon chain, numbering the chain correctly, recognizing functional groups and substituents, and applying standard naming rules. Complete the lessons, practice with examples, and master organic compound naming step by step.
+            </div>
+
+            <div class="bg-dark p-3 rounded-3 border border-secondary mb-4 small">
+                <h6 class="text-neon-pink fw-bold mb-2">📜 กฎการตั้งชื่อ IUPAC สำหรับ Carboxylic Acid (-COOH):</h6>
+                <ol class="mb-0 ps-3 text-secondary lh-base">
+                    <li><strong class="text-light">1. หา Parent Chain:</strong> เลือกสายโซ่คาร์บอนที่ยาวที่สุดซึ่งต้องรวมหมู่ <span class="highlight-cooh">-COOH</span> อยู่ด้วยเสมอ</li>
+                    <li><strong class="text-light">2. ลำดับคาร์บอน:</strong> เริ่มนับ คาร์บอนของหมู่ <span class="highlight-cooh">-COOH</span> เป็นตำแหน่งคาร์บอนหมายเลข 1 (C-1) เสมอ</li>
+                    <li><strong class="text-light">3. ชื่อโซ่หลัก:</strong> เปลี่ยนชื่อ Alkane โดยตัด -e ออกแล้วเติม <span class="text-cyber-green">-oic acid</span> (กลายเป็น Alkanoic acid)</li>
+                    <li><strong class="text-light">4. ระบุหมู่แทนที่:</strong> ระบุตำแหน่งและชื่อกิ่ง/แฮโลเจนไว้ข้างหน้า เรียงตามอักษรภาษาอังกฤษ (e.g., bromo, chloro, methyl)</li>
+                </ol>
+            </div>
+
+            <button class="btn btn-cyber-primary w-100 py-3 cyber-font fs-5" onclick="startGame()">
+                CONTINUE &gt;&gt;
+            </button>
+        </div>
+
+        <!-- ================= PAGE 3: GAMEPLAY ================= -->
+        <div id="page-game" class="hidden">
+            <!-- Feedback Overlay -->
+            <div id="feedback-overlay" class="feedback-banner hidden"></div>
+
+            <!-- HUD Header -->
+            <div class="row g-2 mb-3 text-center cyber-font small">
+                <div class="col-3">
+                    <div class="hud-badge">
+                        <span class="text-secondary d-block" style="font-size:0.75rem;">SCORE</span>
+                        <span id="hud-score" class="text-cyber-green fw-bold fs-5">0</span>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="hud-badge">
+                        <span class="text-secondary d-block" style="font-size:0.75rem;">LIVES</span>
+                        <span id="hud-lives" class="text-neon-pink fw-bold fs-5">❤️ 3</span>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="hud-badge">
+                        <span class="text-secondary d-block" style="font-size:0.75rem;">STAGE</span>
+                        <span id="hud-stage" class="text-neon-cyan fw-bold fs-5">1/20</span>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="hud-badge">
+                        <span class="text-secondary d-block" style="font-size:0.75rem;">TIMER</span>
+                        <span id="hud-timer" class="text-warning-yellow fw-bold fs-5">25s</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Difficulty & Structure -->
+            <div class="text-center mb-3">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span id="hud-level-tag" class="badge bg-secondary">Level 1: Straight Chain</span>
+                    <span id="hud-combo" class="badge bg-danger text-light cyber-font">COMBO x0</span>
+                </div>
+                <div id="chem-structure" class="chemical-structure text-neon-cyan">
+                    <!-- Dynamic Formula -->
+                </div>
+            </div>
+
+            <!-- 4 Options Grid -->
+            <div id="options-container" class="row g-2 mb-2">
+                <!-- JS Inject Buttons -->
+            </div>
+
+            <!-- Detailed Explanation Box (Shows on Incorrect) -->
+            <div id="explanation-container" class="explanation-box hidden">
+                <div class="fw-bold text-warning-yellow mb-1">
+                    💡 เฉลยและคำอธิบายอย่างละเอียดทีละขั้นตอน:
+                </div>
+                <div id="explanation-content" class="text-light">
+                    <!-- Dynamic Explanation -->
+                </div>
+                <button id="btn-next-q" class="btn btn-cyber-primary w-100 mt-3 py-2 cyber-font" onclick="nextQuestionAfterExplanation()">
+                    NEXT QUESTION &gt;&gt;
+                </button>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 4: RESULT ================= -->
+        <div id="page-result" class="text-center hidden">
+            <h2 id="result-header" class="cyber-font text-neon-cyan h1 mb-3">SYSTEM BREACHED!</h2>
+            
+            <div class="bg-dark p-4 rounded-3 border border-info mb-4">
+                <div class="row g-3">
+                    <div class="col-6">
+                        <span class="text-secondary small d-block">TOTAL SCORE</span>
+                        <span id="res-score" class="cyber-font text-cyber-green fs-3">0</span>
+                    </div>
+                    <div class="col-6">
+                        <span class="text-secondary small d-block">ACCURACY</span>
+                        <span id="res-percent" class="cyber-font text-neon-cyan fs-3">0%</span>
+                    </div>
+                    <div class="col-6">
+                        <span class="text-secondary small d-block">GRADE</span>
+                        <span id="res-grade" class="cyber-font text-warning-yellow fs-3">S</span>
+                    </div>
+                    <div class="col-6">
+                        <span class="text-secondary small d-block">HACKER RANK</span>
+                        <span id="res-rank" class="cyber-font text-neon-pink fs-5">Cyber God</span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-cyber-primary w-100 py-3 cyber-font fs-5 mb-2" onclick="startGame()">
+                PLAY AGAIN
+            </button>
+            <button class="btn btn-cyber-outline w-100 py-2 cyber-font" onclick="goToPage('page-home')">
+                MAIN MENU
+            </button>
+        </div>
+
+    </div>
+
+    <!-- ================= JAVASCRIPT GAME LOGIC ================= -->
+    <script>
+        // --- 1. FIXED QUESTION BANK (EXACTLY 20 PUBCHEM VERIFIED QUESTIONS) ---
+        const questionBank = [
+            // Level 1: Straight Chain (Q1 - Q5)
+            {
+                id: 1,
+                level: 1,
+                levelTag: "Level 1: Straight Chain",
+                formula: "HCOOH",
+                highlightedFormula: "<span class='highlight-cooh'>H-COOH</span>",
+                iupac: "methanoic acid",
+                options: ["methanoic acid", "ethanoic acid", "formic acid", "propanoic acid"],
+                carbonCount: 1,
+                chainName: "methane",
+                explanation: `1) <b>การไฮไลต์หมู่ฟังก์ชัน:</b> โครงสร้างมีหมู่ carboxyl คือ <span class='highlight-cooh'>H-COOH</span><br>
+2) <b>การนับคาร์บอน:</b> สายโซ่หลักที่รวมหมู่ -COOH มีคาร์บอนทั้งหมด <b>1 อะตอม</b> (คาร์บอนหมายเลข 1 คือ C ในหมู่ -COOH)<br>
+3) <b>การตั้งชื่อ IUPAC:</b> คาร์บอน 1 อะตอม มาจาก Alkane ชื่อ <i>methane</i> เปลี่ยนคำลงท้ายเป็น <b>-oic acid</b> ได้เป็น <b>methanoic acid</b><br>
+4) <b>เหตุผลที่ตัวเลือกอื่นผิด:</b> <i>ethanoic acid</i> มีคาร์บอน 2 อะตอม, <i>propanoic acid</i> มีคาร์บอน 3 อะตอม ส่วน <i>formic acid</i> เป็นชื่อสามัญ (Common Name) ไม่ใช่ระบบ IUPAC`
+            },
+            {
+                id: 2,
+                level: 1,
+                levelTag: "Level 1: Straight Chain",
+                formula: "CH3-COOH",
+                highlightedFormula: "CH3-<span class='highlight-cooh'>COOH</span>",
+                iupac: "ethanoic acid",
+                options: ["ethanoic acid", "methanoic acid", "acetic acid", "propanoic acid"],
+                carbonCount: 2,
+                chainName: "ethane",
+                explanation: `1) <b>การไฮไลต์หมู่ฟังก์ชัน:</b> โครงสร้างมีหมู่ <span class='highlight-cooh'>-COOH</span> ต่ออยู่กับกลุ่ม methyl<br>
+2) <b>การนับคาร์บอน:</b> เริ่มนับ C-1 ที่หมู่ -COOH และ C-2 ที่ CH3 รวมมีคาร์บอนสายโซ่หลัก <b>2 อะตอม</b><br>
+3) <b>การตั้งชื่อ IUPAC:</b> คาร์บอน 2 อะตอม มาจาก Alkane ชื่อ <i>ethane</i> เปลี่ยนคำลงท้ายเป็น <b>-oic acid</b> เป็น <b>ethanoic acid</b><br>
+4) <b>เหตุผลที่ตัวเลือกอื่นผิด:</b> <i>acetic acid</i> เป็นชื่อสามัญ ส่วน <i>methanoic acid</i> มี C 1 อะตอม`
+            },
+            {
+                id: 3,
+                level: 1,
+                levelTag: "Level 1: Straight Chain",
+                formula: "CH3-CH2-COOH",
+                highlightedFormula: "CH3-CH2-<span class='highlight-cooh'>COOH</span>",
+                iupac: "propanoic acid",
+                options: ["propanoic acid", "butanoic acid", "ethanoic acid", "propanal"],
+                carbonCount: 3,
+                chainName: "propane",
+                explanation: `1) <b>การไฮไลต์หมู่ฟังก์ชัน:</b> มีหมู่ <span class='highlight-cooh'>-COOH</span> เป็นหมู่ฟังก์ชันหลัก<br>
+2) <b>การนับคาร์บอน:</b> เริ่มนับคาร์บอนหมายเลข 1 จาก <span class='highlight-cooh'>-COOH</span> ไล่ไป CH2 (C-2) และ CH3 (C-3) รวมคาร์บอน <b>3 อะตอม</b><br>
+3) <b>การตั้งชื่อ IUPAC:</b> คาร์บอน 3 อะตอม มาจาก Alkane ชื่อ <i>propane</i> เปลี่ยนเป็น <b>propanoic acid</b><br>
+4) <b>เหตุผลที่ตัวเลือกอื่นผิด:</b> <i>propanal</i> เป็นแอลดีไฮด์ (-CHO) ไม่ใช่กรดคาร์บอกซิลิก`
+            },
+            {
+                id: 4,
+                level: 1,
+                levelTag: "Level 1: Straight Chain",
+                formula: "CH3-CH2-CH2-COOH",
+                highlightedFormula: "CH3-CH2-CH2-<span class='highlight-cooh'>COOH</span>",
+                iupac: "butanoic acid",
+                options: ["butanoic acid", "propanoic acid", "butyric acid", "pentanoic acid"],
+                carbonCount: 4,
+                chainName: "butane",
+                explanation: `1) <b>การไฮไลต์หมู่ฟังก์ชัน:</b> โครงสร้างมีหมู่ <span class='highlight-cooh'>-COOH</span> อยู่ที่ปลายสายโซ่<br>
+2) <b>การนับคาร์บอน:</b> เริ่มนับ C-1 ที่หมู่ <span class='highlight-cooh'>-COOH</span> ต่อไปจนถึงปลายสายโซ่ รวมมีคาร์บอน <b>4 อะตอม</b><br>
+3) <b>การตั้งชื่อ IUPAC:</b> คาร์บอน 4 อะตอม มาจาก Alkane ชื่อ <i>butane</i> ลงท้ายด้วย -oic acid ได้เป็น <b>butanoic acid</b><br>
+4) <b>เหตุผลที่ตัวเลือกอื่นผิด:</b> <i>butyric acid</i> เป็นชื่อสามัญ ไม่ใช่ระบบ IUPAC`
+            },
+            {
+                id: 5,
+                level: 1,
+                levelTag: "Level 1: Straight Chain",
+                formula: "CH3-CH2-CH2-CH2-COOH",
+                highlightedFormula: "CH3-CH2-CH2-CH2-<span class='highlight-cooh'>COOH</span>",
+                iupac: "pentanoic acid",
+                options: ["pentanoic acid", "hexanoic acid", "valeric acid", "butanoic acid"],
+                carbonCount: 5,
+                chainName: "pentane",
+                explanation: `1) <b>การไฮไลต์หมู่ฟังก์ชัน:</b> มีหมู่ <span class='highlight-cooh'>-COOH</span> ที่ตำแหน่งปลายสายโซ่ตรง<br>
+2) <b>การนับคาร์บอน:</b> เริ่มนับคาร์บอนหมายเลข 1 จาก <span class='highlight-cooh'>-COOH</span> จนสุดสายโซ่ รวมได้คาร์บอน <b>5 อะตอม</b><br>
+3) <b>การตั้งชื่อ IUPAC:</b> คาร์บอน 5 อะตอม มาจาก Alkane ชื่อ <i>pentane</i> อ่านว่า <b>pentanoic acid</b><br>
+4) <b>เหตุผลที่ตัวเลือกอื่นผิด:</b> <i>valeric acid</i> เป็นชื่อสามัญ ส่วน <i>hexanoic acid</i> มี C 6 อะตอม`
+            },
+
+            // Level 2: Branched Chain (Q6 - Q10)
+            {
+                id: 6,
+                level: 2,
+                levelTag: "Level 2: Branched Chain",
+                formula: "CH3-CH(CH3)-COOH",
+                highlightedFormula: "CH3-CH(CH3)-<span class='highlight-cooh'>COOH</span>",
+                iupac: "2-methylpropanoic acid",
+                options: ["2-methylpropanoic acid", "3-methylpropanoic acid", "butanoic acid", "2-methylbutanoic acid"],
+                carbonCount: 3,
+                chainName: "propane",
+                explanation: `1) <b>การไฮไลต์หมู่ฟังก์ชัน:</b> โครงสร้างแตกกิ่งที่มีหมู่หลักคือ <span class='highlight-cooh'>-COOH</span><br>
+2) <b>การนับคาร์บอน:</b> เลือกสายโซ่คาร์บอนที่ยาวที่สุดที่รวมหมู่ -COOH ได้ <b>3 อะตอม</b> (propane) โดยเริ่มนับ C-1 ที่หมู่ -COOH<br>
+3) <b>ระบุหมู่แทนที่:</b> มีหมู่แทนที่ methyl (-CH3) เกาะอยู่ที่คาร์บอนตำแหน่ง C-2<br>
+4) <b>การตั้งชื่อ IUPAC:</b> ระบุตำแหน่งกิ่งแล้วตามด้วยชื่อโซ่หลัก ได้เป็น <b>2-methylpropanoic acid</b><br>
+5) <b>เหตุผลที่ตัวเลือกอื่นผิด:</b> <i>3-methylpropanoic acid</i> ผิดเพราะสายโซ่หลักมี C เพียง 3 อะตอม ไม่มีตำแหน่ง C-3 ให้กิ่งเกาะ`
+            },
+            {
+                id: 7,
+                level: 2,
+                levelTag: "Level 2: Branched Chain",
+                formula: "CH3-CH(CH3)-CH2-COOH",
+                highlightedFormula: "CH3-CH(CH3)-CH2-<span class='highlight-cooh'>COOH</span>",
+                iupac: "3-methylbutanoic acid",
+                options: ["3-methylbutanoic acid", "2-methylbutanoic acid", "pentanoic acid", "3-methylpropanoic acid"],
+                carbonCount: 4,
+                chainName: "butane",
+                explanation: `1) <b>การไฮไลต์หมู่ฟังก์ชัน:</b> มีหมู่ <span class='highlight-cooh'>-COOH</span> เป็นหลัก<br>
+2) <b>การนับคาร์บอน:</b> สายโซ่หลักที่ยาวที่สุดมีคาร์บอน <b>4 อะตอม</b> (butane) เริ่มนับ C-1 จาก <span class='highlight-cooh'>-COOH</span> ไปทางซ้าย (C-1 -> C-2 -> C-3 -> C-4)<br>
+3) <b>ระบุหมู่แทนที่:</b> พบหมู่ methyl (-CH3) เกาะที่คาร์บอนตำแหน่ง C-3<br>
+4) <b>การตั้งชื่อ IUPAC:</b> รวมชื่อกิ่งและโซ่หลักได้เป็น <b>3-methylbutanoic acid</b><br>
+5) <b>เหตุผลที่ตัวเลือกอื่นผิด:</b> <i>2-methylbutanoic acid</i> ผิดตำแหน่งกิ่ง เพราะหากนับจาก -COOH เป็น C-1 กิ่งจะอยู่ที่ C-3`
+            },
+            {
+                id: 8,
+                level: 2,
+                levelTag: "Level 2: Branched Chain",
+                formula: "CH3-C(CH3)2-COOH",
+                highlightedFormula: "CH3-C(CH3)2-<span class='highlight-cooh'>COOH</span>",
+                iupac: "2,2-dimethylpropanoic acid",
+                options: ["2,2-dimethylpropanoic acid", "2-dimethylpropanoic acid", "2,2-methylpropanoic acid", "2,2-dimethylbutanoic acid"],
+                carbonCount: 3,
+                chainName: "propane",
+                explanation: `1) <b>การไฮไลต์หมู่ฟังก์ชัน:</b> หมู่หลักคือ <span class='highlight-cooh'>-COOH</span><br>
+2) <b>การนับคาร์บอน:</b> สายโซ่หลักที่ยาวที่สุดรวม -COOH มีคาร์บอน <b>3 อะตอม</b> (propane) เริ่มนับ C-1 ที่ -COOH<br>
+3) <b>ระบุหมู่แทนที่:</b> มีหมู่ methyl 2 หมู่ เกาะอยู่ที่ C-2 เดียวกัน ต้องใช้คำนำหน้า <b>di-</b> และระบุตำแหน่ง <b>2,2-</b><br>
+4) <b>การตั้งชื่อ IUPAC:</b> อ่านว่า <b>2,2-dimethylpropanoic acid</b><br>
+5) <b>เหตุผลที่ตัวเลือกอื่นผิด:</b> <i>2-dimethylpropanoic acid</i> ผิดเพราะขาดตัวเลขบอกตำแหน่งกิ่งตัวที่สอง`
+            },
+            {
+                id: 9,
+                level: 2,
+                levelTag: "Level 2: Branched Chain",
+                formula: "CH3-CH2-CH(CH2CH3)-COOH",
+                highlightedFormula: "CH3-CH2-CH(CH2CH3)-<span class='highlight-cooh'>COOH</span>",
+                iupac: "2-ethylbutanoic acid",
+                options: ["2-ethylbutanoic acid", "3-ethylbutanoic acid", "2-methylpentanoic acid", "3-methylpentanoic acid"],
+                carbonCount: 4,
+                chainName: "butane",
+                explanation: `1) <b>การไฮไลต์หมู่ฟังก์ชัน:</b> โครงสร้างมี <span class='highlight-cooh'>-COOH</span> เป็นหลัก<br>
+2) <b>การนับคาร์บอน:</b> เลือกสายโซ่ที่ยาวที่สุดที่รวม <span class='highlight-cooh'>-COOH</span> แล้วได้คาร์บอน <b>4 อะตอม</b> (butane) โดยนับ C-1 ที่ -COOH<br>
+3) <b>ระบุหมู่แทนที่:</b> ที่ตำแหน่ง C-2 มีหมู่ ethyl (-CH2CH3) เกาะอยู่<br>
+4) <b>การตั้งชื่อ IUPAC:</b> อ่านว่า <b>2-ethylbutanoic acid</b><br>
+5) <b>เหตุผลที่ตัวเลือกอื่นผิด:</b> <i>2-methylpentanoic acid</i> ผิดเพราะเลือกสายโซ่ที่ไม่ได้นับ C-1 ตรง -COOH เป็นจุดเริ่มต้นสายหลักอย่างถูกต้อง`
+            },
+            {
+                id: 10,
+                level: 2,
+                levelTag: "Level 2: Branched Chain",
+                formula: "CH3-CH(CH3)-CH(CH3)-COOH",
+                highlightedFormula: "CH3-CH(CH3)-CH(CH3)-<span class='highlight-cooh'>COOH</span>",
+                iupac: "2,3-dimethylbutanoic acid",
+                options: ["2,3-dimethylbutanoic acid", "1,2-dimethylbutanoic acid", "2,3-methylbutanoic acid", "3,4-dimethylbutanoic acid"],
+                carbonCount: 4,
+                chainName: "butane",
+                explanation: `1) <b>การไฮไลต์หมู่ฟังก์ชัน:</b> มีหมู่ <span class='highlight-cooh'>-COOH</span> ที่ปลายโซ่<br>
+2) <b>การนับคาร์บอน:</b> สายโซ่หลักที่ยาวที่สุดมีคาร์บอน <b>4 อะตอม</b> (butane) เริ่มนับ C-1 ที่ -COOH<br>
+3) <b>ระบุหมู่แทนที่:</b> พบหมู่ methyl เกาะอยู่ที่ C-2 และ C-3 รวมเป็น 2,3-dimethyl<br>
+4) <b>การตั้งชื่อ IUPAC:</b> รวมชื่อได้ว่า <b>2,3-dimethylbutanoic acid</b><br>
+5) <b>เหตุผลที่ตัวเลือกอื่นผิด:</b> <i>1,2-dimethylbutanoic acid</i> ผิดเพราะตำแหน่ง C-1 คือคาร์บอนของ -COOH ไม่สามารถมีกิ่ง methyl มาเกาะได้`
+            },
+
+            // Level 3: Single Functional Group / Haloacids (Q11 - Q15)
+            {
+                id: 11,
+                level: 3,
+                levelTag: "Level 3: Functional Groups",
+                formula: "CH2Cl-COOH",
+                highlightedFormula: "CH2Cl-<span class='highlight-cooh'>COOH</span>",
+                iupac: "2-chloroethanoic acid",
+                options: ["2-chloroethanoic acid", "1-chloroethanoic acid", "chloroacetic acid", "2-chloropropanoic acid"],
+                carbonCount: 2,
+                chainName: "ethane",
+                explanation: `1) <b>การไฮไลต์หมู่ฟังก์ชัน:</b> มีหมู่ <span class='highlight-cooh'>-COOH</span> และแฮโลเจน Cl<br>
+2) <b>การนับคาร์บอน:</b> คาร์บอนหมายเลข 1 คือ C ใน -COOH และ คาร์บอนหมายเลข 2 คือ C ที่มี Cl เกาะ สายโซ่หลักมี C <b>2 อะตอม</b> (ethane)<br>
+3) <b>ระบุหมู่แทนที่:</b> อะตอม Cl (chloro) เกาะอยู่ที่ตำแหน่ง C-2<br>
+4) <b>การตั้งชื่อ IUPAC:</b> อ่านชื่อกิ่งตามด้วยโซ่หลัก ได้เป็น <b>2-chloroethanoic acid</b><br>
+5) <b>เหตุผลที่ตัวเลือกอื่นผิด:</b> <i>chloroacetic acid</i> เป็นชื่อสามัญ ส่วน <i>1-chloroethanoic acid</i> ผิดตำแหน่งเพราะ C-1 คือหมู่ -COOH`
+            },
+            {
+                id: 12,
+                level: 3,
+                levelTag: "Level 3: Functional Groups",
+                formula: "CH3-CHBr-COOH",
+                highlightedFormula: "CH3-CHBr-<span class='highlight-cooh'>COOH</span>",
+                iupac: "2-bromopropanoic acid",
+                options: ["2-bromopropanoic acid", "3-bromopropanoic acid", "1-bromopropanoic acid", "2-bromobutanoic acid"],
+                carbonCount: 3,
+                chainName: "propane",
+                explanation: `1) <b>การไฮไลต์หมู่ฟังก์ชัน:</b> มีหมู่หลักคือ <span class='highlight-cooh'>-COOH</span><br>
+2) <b>การนับคาร์บอน:</b> สายโซ่หลักมีคาร์บอน <b>3 อะตอม</b> (propane) โดยเริ่มนับ C-1 ที่หมู่ -COOH<br>
+3) <b>ระบุหมู่แทนที่:</b> อะตอม Br (bromo) เกาะอยู่ที่คาร์บอนตำแหน่ง C-2<br>
+4) <b>การตั้งชื่อ IUPAC:</b> ระบุตำแหน่งกิ่งแล้วตามด้วยโซ่หลัก ได้เป็น <b>2-bromopropanoic acid</b><br>
+5) <b>เหตุผลที่ตัวเลือกอื่นผิด:</b> <i>3-bromopropanoic acid</i> ผิดตำแหน่งเนื่องจาก Br เกาะที่ C-2 ไม่ใช่ C-3`
+            },
+            {
+                id: 13,
+                level: 3,
+                levelTag: "Level 3: Functional Groups",
+                formula: "CH2=CH-COOH",
+                highlightedFormula: "CH2=CH-<span class='highlight-cooh'>COOH</span>",
+                iupac: "prop-2-enoic acid",
+                options: ["prop-2-enoic acid", "propanoic acid", "but-2-enoic acid", "acrylic acid"],
+                carbonCount: 3,
+                chainName: "propene",
+                explanation: `1) <b>การไฮไลต์หมู่ฟังก์ชัน:</b> มีหมู่ <span class='highlight-cooh'>-COOH</span> และพันธะคู่ (C=C)<br>
+2) <b>การนับคาร์บอน:</b> เริ่มนับ C-1 จาก <span class='highlight-cooh'>-COOH</span> ไปยัง CH (C-2) และ CH2 (C-3) รวมคาร์บอนสายโซ่หลัก <b>3 อะตอม</b> (propene)<br>
+3) <b>การตั้งชื่อ IUPAC:</b> พบพันธะคู่เชื่อมระหว่างคาร์บอนตำแหน่ง C-2 และ C-3 (ระบุตำแหน่งเลขคาร์บอนตัวเริ่มคือเลข 2) จึงเติมตำแหน่งพันธะคู่เป็น <b>prop-2-enoic acid</b> (หรือเขียนอีกรูปแบบคือ <i>2-propenoic acid</i>)<br>
+4) <b>เหตุผลที่ตัวเลือกอื่นผิด:</b> <i>acrylic acid</i> เป็นชื่อสามัญ ส่วน <i>propanoic acid</i> เป็นกรดพันธะเดี่ยว (ไม่มีพันธะคู่)`
+            },
+            {
+                id: 14,
+                level: 3,
+                levelTag: "Level 3: Functional Groups",
+                formula: "HOOC-COOH",
+                highlightedFormula: "<span class='highlight-cooh'>HOOC</span>-<span class='highlight-cooh'>COOH</span>",
+                iupac: "ethanedioic acid",
+                options: ["ethanedioic acid", "oxalic acid", "methanedioic acid", "propanedioic acid"],
+                carbonCount: 2,
+                chainName: "ethane",
+                explanation: `1) <b>การไฮไลต์หมู่ฟังก์ชัน:</b> มีหมู่ <span class='highlight-cooh'>-COOH</span> อยู่ทั้งสองปลายรวม 2 หมู่<br>
+2) <b>การนับคาร์บอน:</b> คาร์บอนของสายโซ่หลักมีทั้งหมด <b>2 อะตอม</b> (ethane)<br>
+3) <b>การตั้งชื่อ IUPAC:</b> เมื่อมีหมู่ -COOH สองหมู่ ให้ใช้คำลงท้าย <b>-dioic acid</b> โดยไม่ต้องตัด -e ของ ethane ออก ได้เป็น <b>ethanedioic acid</b><br>
+4) <b>เหตุผลที่ตัวเลือกอื่นผิด:</b> <i>oxalic acid</i> เป็นชื่อสามัญที่นิยมใช้แต่ไม่ใช่ชื่อ IUPAC`
+            },
+            {
+                id: 15,
+                level: 3,
+                levelTag: "Level 3: Functional Groups",
+                formula: "HOOC-CH2-COOH",
+                highlightedFormula: "<span class='highlight-cooh'>HOOC</span>-CH2-<span class='highlight-cooh'>COOH</span>",
+                iupac: "propanedioic acid",
+                options: ["propanedioic acid", "malonic acid", "ethanedioic acid", "butanedioic acid"],
+                carbonCount: 3,
+                chainName: "propane",
+                explanation: `1) <b>การไฮไลต์หมู่ฟังก์ชัน:</b> มีหมู่ <span class='highlight-cooh'>-COOH</span> สองหมู่ที่ปลายสายโซ่ทั้งสองข้าง<br>
+2) <b>การนับคาร์บอน:</b> สารนี้มีคาร์บอนรวมทั้งหมด <b>3 อะตอม</b> (propane)<br>
+3) <b>การตั้งชื่อ IUPAC:</b> กรดที่มีหมู่ -COOH สองหมู่ คาร์บอน 3 อะตอม เรียกตามระบบ IUPAC ว่า <b>propanedioic acid</b><br>
+4) <b>เหตุผลที่ตัวเลือกอื่นผิด:</b> <i>malonic acid</i> เป็นชื่อสามัญ`
+            },
+
+            // Level 4: Complex / University Exam Level (Q16 - Q20)
+            {
+                id: 16,
+                level: 4,
+                levelTag: "Level 4: University Exam",
+                formula: "CH3-CHBr-CHCl-COOH",
+                highlightedFormula: "CH3-CHBr-CHCl-<span class='highlight-cooh'>COOH</span>",
+                iupac: "3-bromo-2-chlorobutanoic acid",
+                options: ["3-bromo-2-chlorobutanoic acid", "2-chloro-3-bromobutanoic acid", "2-bromo-3-chlorobutanoic acid", "3-chloro-2-bromobutanoic acid"],
+                carbonCount: 4,
+                chainName: "butane",
+                explanation: `1) <b>การไฮไลต์หมู่ฟังก์ชัน:</b> หมู่หลักคือ <span class='highlight-cooh'>-COOH</span><br>
+2) <b>การนับคาร์บอน:</b> เริ่มนับ C-1 ที่หมู่ <span class='highlight-cooh'>-COOH</span> สายโซ่หลักมี <b>4 อะตอม</b> (butane)<br>
+3) <b>ระบุตำแหน่งและเรียงลำดับกิ่ง:</b> Cl เกาะที่ C-2 (2-chloro) และ Br เกาะที่ C-3 (3-bromo)<br>
+4) <b>กฎการเรียงอักษร IUPAC:</b> ต้องเขียนเรียงชื่อกิ่งตามลำดับอักษรภาษาอังกฤษ ตัว B (<b>bromo</b>) มาก่อน C (<b>chloro</b>) จึงเขียนเป็น <b>3-bromo-2-chlorobutanoic acid</b><br>
+5) <b>เหตุผลที่ตัวเลือกอื่นผิด:</b> <i>2-chloro-3-bromobutanoic acid</i> ผิดกฎการเรียงลำดับอักษรภาษาอังกฤษ`
+            },
+            {
+                id: 17,
+                level: 4,
+                levelTag: "Level 4: University Exam",
+                formula: "CH3-CH(OH)-COOH",
+                highlightedFormula: "CH3-CH(OH)-<span class='highlight-cooh'>COOH</span>",
+                iupac: "2-hydroxypropanoic acid",
+                options: ["2-hydroxypropanoic acid", "lactic acid", "2-hydroxybutanoic acid", "1-hydroxypropanoic acid"],
+                carbonCount: 3,
+                chainName: "propane",
+                explanation: `1) <b>การไฮไลต์หมู่ฟังก์ชัน:</b> มีหมู่ <span class='highlight-cooh'>-COOH</span> และหมู่ไฮดรอกซิล (-OH)<br>
+2) <b>ลำดับความสำคัญของหมู่ฟังก์ชัน:</b> หมู่ <span class='highlight-cooh'>-COOH</span> มีความสำคัญสูงสุดเป็นหมู่หลัก ต้องเริ่มนับ C-1 ที่ -COOH เสมอ สายโซ่หลักมี C <b>3 อะตอม</b> (propane)<br>
+3) <b>ระบุหมู่แทนที่:</b> หมู่ -OH จะถูกลดความสำคัญเป็นกิ่ง เรียกว่า <b>hydroxy-</b> เกาะอยู่ที่ตำแหน่ง C-2<br>
+4) <b>การตั้งชื่อ IUPAC:</b> อ่านชื่อได้เป็น <b>2-hydroxypropanoic acid</b><br>
+5) <b>เหตุผลที่ตัวเลือกอื่นผิด:</b> <i>lactic acid</i> เป็นชื่อสามัญที่พบในนมเปรี้ยว`
+            },
+            {
+                id: 18,
+                level: 4,
+                levelTag: "Level 4: University Exam",
+                formula: "C6H5-COOH",
+                highlightedFormula: "C6H5-<span class='highlight-cooh'>COOH</span>",
+                iupac: "benzoic acid",
+                options: ["benzoic acid", "benzene carboxylic acid", "phenylmethanoic acid", "benzenoic acid"],
+                carbonCount: 7,
+                chainName: "benzoic acid (IUPAC Preferred)",
+                explanation: `1) <b>การไฮไลต์หมู่ฟังก์ชัน:</b> มีหมู่ <span class='highlight-cooh'>-COOH</span> ต่อตรงกับวงแหวนเบนซีน (C6H5-)<br>
+2) <b>กฎ IUPAC สำหรับสารวงอะโรมาติก:</b> สารประกอบที่มีหมู่ -COOH ต่อกับวงเบนซีน ระบบ IUPAC ได้ยอมรับชื่อ <b>benzoic acid</b> เป็นชื่อ IUPAC หลัก (Preferred IUPAC Name)<br>
+3) <b>การตั้งชื่อ IUPAC:</b> อ่านว่า <b>benzoic acid</b><br>
+4) <b>เหตุผลที่ตัวเลือกอื่นผิด:</b> แม้ <i>benzenecarboxylic acid</i> จะอนุญาตให้ใช้ได้ แต่องค์การ IUPAC กำหนดให้ <i>benzoic acid</i> เป็นชื่อสถาปนาหลัก`
+            },
+            {
+                id: 19,
+                level: 4,
+                levelTag: "Level 4: University Exam",
+                formula: "CH3-CO-COOH",
+                highlightedFormula: "CH3-CO-<span class='highlight-cooh'>COOH</span>",
+                iupac: "2-oxopropanoic acid",
+                options: ["2-oxopropanoic acid", "pyruvic acid", "2-ketopropanoic acid", "2-oxobutanoic acid"],
+                carbonCount: 3,
+                chainName: "propane",
+                explanation: `1) <b>การไฮไลต์หมู่ฟังก์ชัน:</b> มีหมู่ <span class='highlight-cooh'>-COOH</span> และหมู่คีโตน (C=O)<br>
+2) <b>ลำดับความสำคัญ:</b> หมู่ <span class='highlight-cooh'>-COOH</span> สำคัญกว่าคีโตน ให้ C-1 อยู่ที่หมู่ -COOH สายโซ่หลักมีคาร์บอน <b>3 อะตอม</b> (propane)<br>
+3) <b>ระบุหมู่แทนที่:</b> หมู่ carbonyl (=O) ของคีโตนจะถูกอ่านเป็นกิ่ง ใช้คำว่า <b>oxo-</b> เกาะที่ C-2<br>
+4) <b>การตั้งชื่อ IUPAC:</b> อ่านว่า <b>2-oxopropanoic acid</b><br>
+5) <b>เหตุผลที่ตัวเลือกอื่นผิด:</b> <i>pyruvic acid</i> เป็นชื่อสามัญทางชีวเคมี`
+            },
+            {
+                id: 20,
+                level: 4,
+                levelTag: "Level 4: University Exam",
+                formula: "HOOC-(CH2)4-COOH",
+                highlightedFormula: "<span class='highlight-cooh'>HOOC</span>-(CH2)4-<span class='highlight-cooh'>COOH</span>",
+                iupac: "hexanedioic acid",
+                options: ["hexanedioic acid", "adipic acid", "pentanedioic acid", "butanedioic acid"],
+                carbonCount: 6,
+                chainName: "hexane",
+                explanation: `1) <b>การไฮไลต์หมู่ฟังก์ชัน:</b> มีหมู่ <span class='highlight-cooh'>-COOH</span> อยู่ที่ปลายทั้งสองข้าง<br>
+2) <b>การนับคาร์บอน:</b> สายโซ่หลักประกอบด้วย C ของ -COOH สองหมู่ และ -CH2- อีก 4 กลุ่ม รวมเป็นคาร์บอน <b>6 อะตอม</b> (hexane)<br>
+3) <b>การตั้งชื่อ IUPAC:</b> เติมคำลงท้าย <b>-dioic acid</b> รวมเป็น <b>hexanedioic acid</b><br>
+4) <b>เหตุผลที่ตัวเลือกอื่นผิด:</b> <i>adipic acid</i> เป็นชื่อสามัญ ส่วน <i>pentanedioic acid</i> มี C เพียง 5 อะตอม และ <i>butanedioic acid</i> มี C เพียง 4 อะตอม`
+            }
+        ];
+
+        // --- 2. GAME STATE VARIABLES ---
+        let currentQuestions = [];
+        let currentIndex = 0;
+        let score = 0;
+        let lives = 3;
+        let combo = 0;
+        let maxCombo = 0;
+        let timer = null;
+        let timeLeft = 25;
+        let isAnswering = false;
+
+        // --- 3. FISHER-YATES SHUFFLE ALGORITHM ---
+        function fisherYatesShuffle(array) {
+            let shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        // --- 4. PAGE NAVIGATION ---
+        function goToPage(pageId) {
+            document.querySelectorAll('#page-home, #page-howto, #page-game, #page-result').forEach(el => el.classList.add('hidden'));
+            document.getElementById(pageId).classList.remove('hidden');
+        }
+
+        // --- 5. GAME INITIALIZATION ---
+        function startGame() {
+            // Shuffle exactly the 20 fixed questions using Fisher-Yates
+            currentQuestions = fisherYatesShuffle(questionBank);
+            currentIndex = 0;
+            score = 0;
+            lives = 3;
+            combo = 0;
+            maxCombo = 0;
+            
+            goToPage('page-game');
+            loadQuestion();
+        }
+
+        // --- 6. QUESTION RENDERER ---
+        function loadQuestion() {
+            if (currentIndex >= 20 || lives <= 0) {
+                endGame();
+                return;
+            }
+
+            isAnswering = true;
+            document.getElementById('explanation-container').classList.add('hidden');
+            
+            const q = currentQuestions[currentIndex];
+
+            // Update HUD
+            document.getElementById('hud-score').innerText = score;
+            document.getElementById('hud-lives').innerText = '❤️ '.repeat(lives) || '💀';
+            document.getElementById('hud-stage').innerText = `${currentIndex + 1}/20`;
+            document.getElementById('hud-level-tag').innerText = q.levelTag;
+            document.getElementById('hud-combo').innerText = `COMBO x${combo}`;
+            document.getElementById('chem-structure').innerHTML = q.highlightedFormula;
+
+            // Shuffle 4 options for this specific question
+            let options = fisherYatesShuffle(q.options);
+
+            // Render Option Buttons with data attribute for exact matching
+            const optContainer = document.getElementById('options-container');
+            optContainer.innerHTML = '';
+            options.forEach(opt => {
+                const col = document.createElement('div');
+                col.className = 'col-12 col-md-6';
+                col.innerHTML = `
+                    <button class="btn btn-cyber-outline btn-option w-100 cyber-font" data-answer="${opt}" onclick="handleAnswer('${opt}', this)">
+                        &gt; ${opt}
+                    </button>
+                `;
+                optContainer.appendChild(col);
+            });
+
+            // Reset Countdown Timer
+            resetTimer(q.level);
+        }
+
+        // --- 7. COUNTDOWN TIMER LOGIC ---
+        function resetTimer(level) {
+            clearInterval(timer);
+            timeLeft = 30 - ((level - 1) * 3);
+            document.getElementById('hud-timer').innerText = `${timeLeft}s`;
+
+            timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('hud-timer').innerText = `${timeLeft}s`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    handleAnswer(null, null); // Time out treated as Incorrect
+                }
+            }, 1000);
+        }
+
+        // --- 8. ANSWER HANDLER ---
+        function handleAnswer(selectedAns, btnElement) {
+            if (!isAnswering) return;
+            isAnswering = false;
+            clearInterval(timer);
+
+            const q = currentQuestions[currentIndex];
+            const isCorrect = (selectedAns === q.iupac);
+            const feedback = document.getElementById('feedback-overlay');
+            feedback.classList.remove('hidden', 'feedback-success', 'feedback-error');
+
+            if (isCorrect) {
+                combo++;
+                if (combo > maxCombo) maxCombo = combo;
+                score += 10;
+                
+                if (btnElement) btnElement.classList.add('correct-choice');
+
+                feedback.innerText = "CORRECT!";
+                feedback.classList.add('feedback-success');
+
+                setTimeout(() => {
+                    feedback.classList.add('hidden');
+                    currentIndex++;
+                    loadQuestion();
+                }, 1200);
+
+            } else {
+                combo = 0;
+                lives--;
+                document.getElementById('hud-lives').innerText = '❤️ '.repeat(lives) || '💀';
+
+                if (btnElement) btnElement.classList.add('wrong-choice');
+                
+                // Highlight STRICTLY ONLY the exact correct option button
+                document.querySelectorAll('.btn-option').forEach(btn => {
+                    if (btn.getAttribute('data-answer') === q.iupac) {
+                        btn.classList.add('correct-choice');
+                    }
+                });
+
+                feedback.innerText = "INCORRECT!";
+                feedback.classList.add('feedback-error');
+
+                setTimeout(() => {
+                    feedback.classList.add('hidden');
+                    showDetailedExplanation(q);
+                }, 1200);
+            }
+        }
+
+        // --- 9. DETAILED EXPLANATION DISPLAY (DYNAMIC LIVES CHECK) ---
+        function showDetailedExplanation(q) {
+            const expContent = document.getElementById('explanation-content');
+            const nextBtn = document.getElementById('btn-next-q');
+            
+            expContent.innerHTML = q.explanation;
+
+            // Check if lives are depleted to change button to "END GAME"
+            if (lives <= 0) {
+                nextBtn.innerText = "END GAME >>";
+                nextBtn.className = "btn btn-cyber-danger w-100 mt-3 py-2 cyber-font";
+            } else {
+                nextBtn.innerText = "NEXT QUESTION >>";
+                nextBtn.className = "btn btn-cyber-primary w-100 mt-3 py-2 cyber-font";
+            }
+
+            document.getElementById('explanation-container').classList.remove('hidden');
+        }
+
+        function nextQuestionAfterExplanation() {
+            document.getElementById('explanation-container').classList.add('hidden');
+            if (lives <= 0) {
+                endGame();
+            } else {
+                currentIndex++;
+                loadQuestion();
+            }
+        }
+
+        // --- 10. END GAME & RESULT EVALUATION ---
+        function endGame() {
+            clearInterval(timer);
+            goToPage('page-result');
+
+            const totalQuestions = 20;
+            const percentage = Math.round((score / (totalQuestions * 10)) * 100);
+            
+            document.getElementById('res-score').innerText = score;
+            document.getElementById('res-percent').innerText = `${percentage}%`;
+
+            let grade = 'F', rank = 'Novice Script Kiddie';
+            if (percentage >= 90) { grade = 'S'; rank = 'Cyber God'; }
+            else if (percentage >= 80) { grade = 'A'; rank = 'Master Hacker'; }
+            else if (percentage >= 70) { grade = 'B'; rank = 'System Specialist'; }
+            else if (percentage >= 60) { grade = 'C'; rank = 'NetRunner'; }
+            else if (percentage >= 50) { grade = 'D'; rank = 'Code Monkey'; }
+
+            document.getElementById('res-grade').innerText = grade;
+            document.getElementById('res-rank').innerText = rank;
+
+            const resHeader = document.getElementById('result-header');
+            if (lives <= 0) {
+                resHeader.innerText = "SYSTEM LOCKED!";
+                resHeader.className = "cyber-font text-neon-pink h1 mb-3";
+            } else {
+                resHeader.innerText = "SYSTEM BREACHED!";
+                resHeader.className = "cyber-font text-neon-cyan h1 mb-3";
+            }
+        }
+    </script>
+</body>
+</html>
